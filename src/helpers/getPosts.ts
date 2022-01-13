@@ -6,6 +6,8 @@ interface PostType {
   user: string;
   url: string;
   caption: string;
+  likes: number;
+  usersLiked: Array<string | null>;
 }
 
 const getPosts = async () => {

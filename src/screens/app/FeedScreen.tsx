@@ -1,6 +1,7 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
+import Loading from "../../components/Loading";
 import PostComponent from "../../components/PostComponent";
 import getPosts from "../../helpers/getPosts";
 
@@ -8,6 +9,8 @@ interface PostType {
   user: string;
   url: string;
   caption: string;
+  likes: number;
+  usersLiked: Array<string | null>;
 }
 
 const FeedScreen = () => {
@@ -17,15 +20,11 @@ const FeedScreen = () => {
     getPosts().then((arr) => {
       setPosts(arr);
     });
-  }, []);
-
-  useEffect(() => {
-    console.log(posts);
   }, [posts]);
 
   return (
     <Layout>
-      {posts?.length && (
+      {posts?.length ? (
         <Flex
           flexDir="row"
           mt="20px"
@@ -43,6 +42,8 @@ const FeedScreen = () => {
             <Text>suggetions</Text>
           </Flex>
         </Flex>
+      ) : (
+        <Loading />
       )}
     </Layout>
   );

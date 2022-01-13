@@ -23,6 +23,8 @@ const uploadNewPost = async (
       url: url,
       caption: caption,
       user: user,
+      likes: 0,
+      usersLiked: [],
     });
 
     setSelectedImage(null);

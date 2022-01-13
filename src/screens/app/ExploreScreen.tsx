@@ -1,7 +1,7 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import PostComponent from "../../components/PostComponent";
+import Loading from "../../components/Loading";
 import getPosts from "../../helpers/getPosts";
 
 interface PostType {
@@ -13,28 +13,31 @@ interface PostType {
 const ExploreScreen = () => {
   const [posts, setPosts] = useState<Array<PostType>>();
 
+  useEffect(() => {
+    getPosts().then((arr) => {
+      setPosts(arr);
+    });
+  }, []);
+
   return (
     <Layout>
-      <Text>explore page</Text>
-      {/* {posts?.length && (
-        <Flex
-          flexDir="row"
-          mt="20px"
-          ml="20%"
-          justifyContent="space-around"
-          w="80%"
-        >
-          <Flex flexDir="column">
+      <Flex justifyContent="center" w="100%">
+        {posts?.length ? (
+          <Flex flexDir="row" flexWrap="wrap" w="70%">
             {posts.map((post) => (
-              <PostComponent post={post} />
+              <Image
+                w="270px"
+                h="250px"
+                src={post.url}
+                margin={5}
+                cursor="pointer"
+              />
             ))}
           </Flex>
-
-          <Flex flexDir="column">
-            <Text>suggetions</Text>
-          </Flex>
-        </Flex>
-      )} */}
+        ) : (
+          <Loading />
+        )}
+      </Flex>
     </Layout>
   );
 };

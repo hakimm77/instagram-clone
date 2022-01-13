@@ -2,12 +2,15 @@ import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { CommentIcon, LikeIcon } from "../assets/NavItems";
 import getUserInfo from "../helpers/getUserInfo";
+import likePost from "../helpers/likePost";
 
 interface PostType {
   post: {
     user: string;
     url: string;
     caption: string;
+    likes: number;
+    usersLiked: Array<string | null>;
   };
 }
 
@@ -20,11 +23,17 @@ interface UserType {
 
 const PostComponent: React.FC<PostType> = ({ post }) => {
   const [user, setUser] = useState<UserType | undefined>();
-  const [postLiked, setPostLiked] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(
+    localStorage.getItem("USER")
+  );
 
   useEffect(() => {
     getUserInfo(post.user, setUser);
   }, []);
+
+  const handlePostLike = () => {
+    likePost(post, userId);
+  };
 
   return (
     <Flex flexDir="column" width={600} mb="30px" border="1px solid #dadada">
@@ -47,24 +56,30 @@ const PostComponent: React.FC<PostType> = ({ post }) => {
             src={post.url}
             w="100%"
             h={600}
-            onDoubleClick={() => {
-              setPostLiked(true);
-            }}
+            onDoubleClick={handlePostLike}
           />
 
-          <Flex flexDir="row" alignItems="center">
-            <Box
-              padding={2}
-              onClick={() => {
-                setPostLiked((e) => (e ? false : true));
-              }}
-            >
-              <LikeIcon liked={postLiked} />
-            </Box>
+          <Flex flexDir="column">
+            <Flex flexDir="row" alignItems="center">
+              <Flex
+                padding={2}
+                onClick={handlePostLike}
+                flexDir="row"
+                alignItems="center"
+              >
+                <LikeIcon
+                  liked={post.usersLiked.includes(localStorage.getItem("USER"))}
+                />
+              </Flex>
 
-            <Box padding={2}>
-              <CommentIcon />
-            </Box>
+              <Box padding={2}>
+                <CommentIcon />
+              </Box>
+            </Flex>
+
+            <Text paddingLeft={2} fontWeight="bold" fontSize={17}>
+              {post.likes !== 0 && `Liked by ${post.likes}`}
+            </Text>
           </Flex>
 
           <Flex
@@ -72,7 +87,7 @@ const PostComponent: React.FC<PostType> = ({ post }) => {
             alignItems="center"
             flexWrap="wrap"
             wordBreak="break-word"
-            padding={2}
+            padding={3}
           >
             <Text fontWeight="bold" cursor="pointer">
               {user.name}

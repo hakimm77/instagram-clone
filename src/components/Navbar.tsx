@@ -16,8 +16,6 @@ import {
 } from "../assets/NavItems";
 import uploadNewPost from "../helpers/uploadNewPost";
 
-const reader = new FileReader();
-
 const Navbar = () => {
   const inputRef: any = useRef();
   const [selectedImage, setSelectedImage] = useState<File | null>();
@@ -84,6 +82,10 @@ const Navbar = () => {
           src={require("../assets/instagram-icon.jpg")}
           width={125}
           height="65px"
+          onClick={() => {
+            window.location.href = "/home";
+          }}
+          cursor="pointer"
         />
 
         <Box>
