@@ -11,9 +11,10 @@ interface PostType {
   caption: string;
   likes: number;
   usersLiked: Array<string | null>;
+  id: string;
 }
 
-const FeedScreen = () => {
+const FeedScreen: React.FC = () => {
   const [posts, setPosts] = useState<Array<PostType>>();
 
   useEffect(() => {

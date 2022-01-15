@@ -1,6 +1,5 @@
 import { db } from "../firebase/firebaseConfig";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
-import { async } from "@firebase/util";
 
 interface PostType {
   user: string;
@@ -8,17 +7,19 @@ interface PostType {
   caption: string;
   likes: number;
   usersLiked: Array<string | null>;
+  id: string;
 }
 
 const getPosts = async () => {
   let arr: Array<PostType> = [];
+
   await getDocs(query(collection(db, "posts"))).then((posts) => {
     posts.forEach(async (res) => {
       const post = await res.data();
-
-      arr.push(post as PostType);
+      arr.push({ ...(post as PostType), id: res.id });
     });
   });
+
   return arr;
 };
 

@@ -11,6 +11,7 @@ interface PostType {
     caption: string;
     likes: number;
     usersLiked: Array<string | null>;
+    id: string;
   };
 }
 
@@ -57,6 +58,7 @@ const PostComponent: React.FC<PostType> = ({ post }) => {
             w="100%"
             h={600}
             onDoubleClick={handlePostLike}
+            objectFit="cover"
           />
 
           <Flex flexDir="column">
@@ -72,7 +74,12 @@ const PostComponent: React.FC<PostType> = ({ post }) => {
                 />
               </Flex>
 
-              <Box padding={2}>
+              <Box
+                padding={2}
+                onClick={() => {
+                  window.location.href = `/post/${post.id}`;
+                }}
+              >
                 <CommentIcon />
               </Box>
             </Flex>

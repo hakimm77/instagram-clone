@@ -8,9 +8,12 @@ interface PostType {
   user: string;
   url: string;
   caption: string;
+  likes: number;
+  usersLiked: Array<string | null>;
+  id: string;
 }
 
-const ExploreScreen = () => {
+const ExploreScreen: React.FC = () => {
   const [posts, setPosts] = useState<Array<PostType>>();
 
   useEffect(() => {
@@ -31,6 +34,10 @@ const ExploreScreen = () => {
                 src={post.url}
                 margin={5}
                 cursor="pointer"
+                objectFit="cover"
+                onClick={() => {
+                  window.location.href = `http://localhost:3000/post/${post.id}`;
+                }}
               />
             ))}
           </Flex>

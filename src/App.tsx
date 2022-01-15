@@ -5,6 +5,7 @@ import Login from "./screens/auth/Login";
 import Signup from "./screens/auth/Signup";
 import FeedScreen from "./screens/app/FeedScreen";
 import ExploreScreen from "./screens/app/ExploreScreen";
+import PostScreen from "./screens/app/PostScreen";
 
 const App = () => {
   const [userId, setUserId] = useState<string | null>(
@@ -18,6 +19,7 @@ const App = () => {
           <>
             <Route path="/home" component={FeedScreen} />
             <Route path="/explore" component={ExploreScreen} />
+            <Route path="/post/:id" component={PostScreen} />
           </>
         ) : (
           <Link to="/login" />
