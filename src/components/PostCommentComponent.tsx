@@ -51,9 +51,12 @@ const PostCommentsComponent: React.FC<PostType> = ({ post, postId }) => {
     localStorage.getItem("USER")
   );
   const [commentTxt, setCommenTxt] = useState<string>("");
+  const [userCommenting, setUserCommenting] = useState<UserType>();
 
   useEffect(() => {
     getUserInfo(post.user, setUser);
+
+    getUserInfo(userId, setUserCommenting);
   }, []);
 
   const handlePostLike = () => {
@@ -61,8 +64,14 @@ const PostCommentsComponent: React.FC<PostType> = ({ post, postId }) => {
   };
 
   const handleAddingComment = async () => {
-    if (commentTxt) {
-      await postComment(postId, userId, commentTxt, post.comments, user?.name);
+    if (commentTxt && userCommenting) {
+      await postComment(
+        postId,
+        userId,
+        commentTxt,
+        post.comments,
+        userCommenting.name
+      );
       setCommenTxt("");
     }
   };
@@ -84,6 +93,9 @@ const PostCommentsComponent: React.FC<PostType> = ({ post, postId }) => {
               flexDir="row"
               alignItems="center"
               borderBottom="1.5px solid #dfdfdf"
+              onClick={() => {
+                window.location.href = `/user/${user.id}`;
+              }}
             >
               <Image
                 src={user.profilePic}
@@ -101,7 +113,14 @@ const PostCommentsComponent: React.FC<PostType> = ({ post, postId }) => {
               {post.comments.map((comment) => (
                 <>
                   <Flex flexDir="row" mb={3}>
-                    <Text fontWeight="bold" paddingRight={2} cursor="pointer">
+                    <Text
+                      fontWeight="bold"
+                      paddingRight={2}
+                      cursor="pointer"
+                      onClick={() => {
+                        window.location.href = `/user/${comment.user}`;
+                      }}
+                    >
                       {comment.name}
                     </Text>
                     <Text wordBreak="break-all"> {comment.comment}</Text>

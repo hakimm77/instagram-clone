@@ -40,7 +40,13 @@ const PostComponent: React.FC<PostType> = ({ post }) => {
     <Flex flexDir="column" width={600} mb="30px" border="1px solid #dadada">
       {user && (
         <>
-          <Flex flexDir="row" alignItems="center">
+          <Flex
+            flexDir="row"
+            alignItems="center"
+            onClick={() => {
+              window.location.href = `/user/${user.id}`;
+            }}
+          >
             <Image
               src={user.profilePic}
               w={10}

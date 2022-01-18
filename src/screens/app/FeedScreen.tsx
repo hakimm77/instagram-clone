@@ -26,21 +26,11 @@ const FeedScreen: React.FC = () => {
   return (
     <Layout>
       {posts?.length ? (
-        <Flex
-          flexDir="row"
-          mt="20px"
-          ml="20%"
-          justifyContent="space-around"
-          w="80%"
-        >
+        <Flex mt="20px" justifyContent="center" w="100%">
           <Flex flexDir="column">
             {posts.map((post) => (
               <PostComponent post={post} />
             ))}
-          </Flex>
-
-          <Flex flexDir="column">
-            <Text>suggetions</Text>
           </Flex>
         </Flex>
       ) : (

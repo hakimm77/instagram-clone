@@ -15,10 +15,16 @@ import {
   SearchIcon,
 } from "../assets/NavItems";
 import uploadNewPost from "../helpers/uploadNewPost";
+import SearcheProfilesComponent from "./SearchProfilesComponent";
 
 const Navbar = () => {
   const inputRef: any = useRef();
   const [selectedImage, setSelectedImage] = useState<File | null>();
+  const [userId, setUserId] = useState<string | null>(
+    localStorage.getItem("USER")
+  );
+  const [searchWord, setSearchWord] = useState("");
+
   const navItems = [
     {
       icon: <HomeIcon />,
@@ -51,7 +57,7 @@ const Navbar = () => {
     {
       icon: require("../assets/profile-icon.jpg"),
       run: () => {
-        window.location.href = "/profile";
+        window.location.href = `user/${userId}`;
       },
       svg: false,
     },
@@ -89,19 +95,17 @@ const Navbar = () => {
         />
 
         <Box>
-          <InputGroup>
-            <InputLeftElement>
-              <SearchIcon />
-            </InputLeftElement>
-
-            <Input
-              border="1px solid gray"
-              backgroundColor="#efefef"
-              w={300}
-              h="40px"
-              placeholder="Search"
-            />
-          </InputGroup>
+          <Input
+            border="1px solid gray"
+            backgroundColor="#efefef"
+            w={300}
+            h="40px"
+            placeholder="Search"
+            onChange={(e) => {
+              setSearchWord(e.target.value);
+            }}
+          />
+          {searchWord && <SearcheProfilesComponent searchWord={searchWord} />}
         </Box>
 
         <Flex flexDir="row">

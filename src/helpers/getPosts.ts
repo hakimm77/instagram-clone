@@ -1,6 +1,11 @@
 import { db } from "../firebase/firebaseConfig";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 
+interface CommentType {
+  user: string;
+  comment: string;
+}
+
 interface PostType {
   user: string;
   url: string;
@@ -8,8 +13,8 @@ interface PostType {
   likes: number;
   usersLiked: Array<string | null>;
   id: string;
+  comments: Array<CommentType>;
 }
-
 const getPosts = async () => {
   let arr: Array<PostType> = [];
 

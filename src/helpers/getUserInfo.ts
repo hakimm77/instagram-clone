@@ -9,7 +9,7 @@ interface UserType {
 }
 
 const getUserInfo = async (
-  userId: string,
+  userId: string | null,
   setUser?: React.Dispatch<React.SetStateAction<UserType | undefined>>
 ) => {
   const userInfo = await getDoc(doc(db, `users/${userId}`));
@@ -18,8 +18,10 @@ const getUserInfo = async (
     if (setUser) {
       setUser(userInfo.data() as UserType);
     } else {
-      return userInfo.data();
+      return userInfo.data() as UserType;
     }
+  } else {
+    return null;
   }
 };
 
