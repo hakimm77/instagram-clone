@@ -1,12 +1,6 @@
 import { db, auth } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-
-interface UserType {
-  email: string;
-  id: string;
-  name: string;
-  profilePic: string;
-}
+import { UserType } from "../types";
 
 const getUserInfo = async (
   userId: string | null,

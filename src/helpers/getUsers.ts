@@ -1,12 +1,6 @@
 import { db } from "../firebase/firebaseConfig";
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
-
-interface UserType {
-  email: string;
-  id: string;
-  name: string;
-  profilePic: string;
-}
+import { UserType } from "../types";
 
 const getUsers = async () => {
   let arr: Array<UserType> = [];

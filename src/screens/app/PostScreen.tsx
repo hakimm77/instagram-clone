@@ -1,33 +1,21 @@
 import { DefaultIcon, Flex, Text } from "@chakra-ui/react";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import PostCommentsComponent from "../../components/PostCommentComponent";
-import getPost from "../../helpers/getPost";
-
-interface CommentType {
-  user: string;
-  comment: string;
-  name: string;
-  id: string;
-}
-
-interface PostType {
-  user: string;
-  url: string;
-  caption: string;
-  likes: number;
-  usersLiked: Array<string | null>;
-  id: string;
-  comments: Array<CommentType>;
-}
+import { db } from "../../firebase/firebaseConfig";
+import { PostType } from "../../types";
 
 const PostScreen: React.FC<{ match: any }> = ({ match }) => {
-  const [post, setPost] = useState<PostType>();
+  const [post, setPost] = useState<PostType | null>();
 
   useEffect(() => {
-    getPost(match.params.id, setPost);
-  }, [post]);
+    setPost(null);
+    onSnapshot(doc(db, `posts/${match.params.id}`), (post) => {
+      setPost(post.data() as PostType);
+    });
+  }, []);
 
   return (
     <Layout>

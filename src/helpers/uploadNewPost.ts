@@ -1,6 +1,6 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../firebase/firebaseConfig";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 
 const uploadNewPost = async (
   image: File,
@@ -26,6 +26,7 @@ const uploadNewPost = async (
       likes: 0,
       usersLiked: [],
       comments: [],
+      timestamp: serverTimestamp(),
     });
 
     setSelectedImage(null);

@@ -5,28 +5,7 @@ import Loading from "../../components/Loading";
 import getPosts from "../../helpers/getPosts";
 import getUserInfo from "../../helpers/getUserInfo";
 import logout from "../../helpers/logout";
-
-interface UserType {
-  email: string;
-  id: string;
-  name: string;
-  profilePic: string;
-}
-
-interface CommentType {
-  user: string;
-  comment: string;
-}
-
-interface PostType {
-  user: string;
-  url: string;
-  caption: string;
-  likes: number;
-  usersLiked: Array<string | null>;
-  id: string;
-  comments: Array<CommentType>;
-}
+import { PostType, UserType } from "../../types";
 
 const UserScreen: React.FC<{ match: any }> = ({ match }) => {
   const [user, setUser] = useState<UserType | undefined>();

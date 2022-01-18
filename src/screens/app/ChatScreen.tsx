@@ -4,15 +4,10 @@ import React, { useEffect, useState } from "react";
 import ChatComponent from "../../components/ChatComponent";
 import Layout from "../../components/Layout";
 import { db } from "../../firebase/firebaseConfig";
-
-interface messageType {
-  message: string;
-  picture: string;
-  userId: string;
-}
+import { MessageType } from "../../types";
 
 const ChatScreen: React.FC = () => {
-  const [messages, setMessages] = useState<Array<messageType>>([]);
+  const [messages, setMessages] = useState<Array<MessageType>>([]);
 
   useEffect(() => {
     setMessages([]);
@@ -23,7 +18,7 @@ const ChatScreen: React.FC = () => {
         messages.forEach(async (res) => {
           const message = (await res.data()) || [];
 
-          setMessages((p: any) => [...p, message] as Array<messageType>);
+          setMessages((p: any) => [...p, message] as Array<MessageType>);
         });
       }
     );

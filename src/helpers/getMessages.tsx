@@ -6,22 +6,17 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-
-interface messageType {
-  message: string;
-  picture: string;
-  userId: string;
-}
+import { MessageType } from "../types";
 
 const getMessages = async () => {
-  let arr: Array<messageType> = [];
+  let arr: Array<MessageType> = [];
 
   await onSnapshot(
     query(collection(db, "chat"), orderBy("timestamp", "asc")),
     (messages) => {
       messages.forEach(async (res) => {
         const messages = await res.data();
-        arr.push(messages as messageType);
+        arr.push(messages as MessageType);
       });
     }
   );

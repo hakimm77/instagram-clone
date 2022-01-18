@@ -1,18 +1,12 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import PostComponent from "../../components/PostComponent";
+import { db } from "../../firebase/firebaseConfig";
 import getPosts from "../../helpers/getPosts";
-
-interface PostType {
-  user: string;
-  url: string;
-  caption: string;
-  likes: number;
-  usersLiked: Array<string | null>;
-  id: string;
-}
+import { PostType } from "../../types";
 
 const FeedScreen: React.FC = () => {
   const [posts, setPosts] = useState<Array<PostType>>();

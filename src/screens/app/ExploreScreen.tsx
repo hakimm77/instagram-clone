@@ -3,15 +3,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Loading from "../../components/Loading";
 import getPosts from "../../helpers/getPosts";
-
-interface PostType {
-  user: string;
-  url: string;
-  caption: string;
-  likes: number;
-  usersLiked: Array<string | null>;
-  id: string;
-}
+import { PostType } from "../../types";
 
 const ExploreScreen: React.FC = () => {
   const [posts, setPosts] = useState<Array<PostType>>();
