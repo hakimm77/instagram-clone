@@ -87,7 +87,7 @@ const UserScreen: React.FC<{ match: any }> = ({ match }) => {
                     cursor="pointer"
                     objectFit="cover"
                     onClick={() => {
-                      window.location.href = `http://localhost:3000/post/${post.id}`;
+                      window.location.href = `https://instagram-clone-8f59f.web.app/post/${post.id}`;
                     }}
                   />
                 ))}
